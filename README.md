@@ -70,12 +70,10 @@ images/ Imágenes del colegio y de los candidatos
 3. Programar el día y la hora de la votación.
 4. Al finalizar, descargar el acta de resultados en PDF.
 
-## Privacidad
 
-El registro de estudiantes contiene datos de menores de edad. Los archivos Excel con datos reales no se suben a este repositorio; se cargan únicamente desde el panel administrativo.
 
 ## Autor
 
-**Ronaldo Mamani**
+**Anghelo Airtong Marchena Cordova**
 Estudiante de Ingeniería de Sistemas — Universidad Nacional del Santa
 Proyecto desarrollado como producto final de las prácticas pre-profesionales en la I.E. César Vallejo, Nuevo Chimbote, 2026.
