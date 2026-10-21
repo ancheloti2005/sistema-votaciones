@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Editar portada — I.E. César Vallejo</title>
+  <link rel="icon" href="images/onpe.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Oswald:wght@400;500&family=Raleway:wght@600;700&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="con-ondas">
+
+  <header class="barra">
+    <a href="panel.html" class="marca"><img src="images/logocolegio.png" alt="">I.E. César Vallejo</a>
+    <nav class="barra-nav" aria-label="Panel administrativo">
+      <a href="panel.html">Resultados</a>
+      <a href="estudiantes.html">Registro de estudiantes</a>
+      <a href="candidatos.html">Candidatos</a>
+      <a href="portada.html" aria-current="page">Editar portada</a>
+      <a href="contrasena.html">Contraseñas</a>
+    </nav>
+    <div class="barra-fin">
+      <span class="barra-usuario">Sesión: <span data-admin-nombre></span></span>
+      <a href="index.html" class="btn btn-verde" data-salir>Cerrar sesión</a>
+    </div>
+  </header>
+
+
+  <main class="contenedor">
+    <section class="hoja">
+      <div class="cabecera-hoja">
+        <h1>Editar portada</h1>
+        <p class="bajada">Cambia la imagen de fondo y los textos de la página de inicio. La vista previa se actualiza mientras escribes.</p>
+      </div>
+
+      <div class="mensaje" id="mensaje" role="alert" hidden></div>
+
+      <div class="editor-portada">
+        <form id="formPortada" novalidate>
+          <div class="campo">
+            <label for="pTitulo">Título principal</label>
+            <input class="entrada" id="pTitulo" maxlength="80" autocomplete="off">
+          </div>
+          <div class="campo">
+            <label for="pSubtitulo">Texto debajo del título</label>
+            <input class="entrada" id="pSubtitulo" maxlength="80" autocomplete="off">
+            <p class="ayuda">Déjalo vacío si no quieres mostrarlo.</p>
+          </div>
+          <div class="campo">
+            <span class="etiqueta">Imagen de fondo</span>
+            <label class="zona-archivo zona-chica">
+              <input type="file" id="pFondo" accept="image/png,image/jpeg,image/webp">
+              <span><strong>Elegir imagen</strong><span>JPG o PNG horizontal, idealmente de 1600 × 900 px o más.</span></span>
+            </label>
+            <button type="button" class="btn btn-texto" id="pRestaurar">Volver a la imagen original</button>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
+            <button type="submit" class="btn btn-azul" id="btnGuardarPortada">Guardar portada</button>
+            <button type="button" class="btn btn-borde" id="btnDescartar">Descartar cambios</button>
+          </div>
+        </form>
+
+        <div>
+          <span class="etiqueta">Vista previa</span>
+          <div class="vista-portada" id="vistaPortada">
+            <div class="vp-capa">
+              <div class="vp-barra"><img src="images/logocolegio.png" alt=""><span>I.E. César Vallejo</span><em>Panel Administrativo</em></div>
+              <img class="vp-escudo" src="images/logocolegio.png" alt="">
+              <img class="vp-jec" src="images/je.png" alt="">
+              <div class="vp-centro">
+                <h2 id="vpTitulo"></h2>
+                <p id="vpSubtitulo"></p>
+                <span class="vp-boton"><img src="images/emitir.png" alt="">Emitir su voto</span>
+              </div>
+              <img class="vp-ondas" src="images/fondo.png" alt="">
+            </div>
+          </div>
+          <p class="nota-tabla" id="estadoVista">Así se verá la portada en una pantalla de computadora.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/comun.js"></script>
+  <script src="js/portada.js"></script>
+</body>
+</html>

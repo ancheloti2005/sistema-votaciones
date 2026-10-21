@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Administrar contraseñas — I.E. César Vallejo</title>
+  <link rel="icon" href="images/onpe.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Oswald:wght@400;500&family=Raleway:wght@600;700&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="con-ondas">
+
+  <header class="barra">
+    <a href="panel.html" class="marca"><img src="images/logocolegio.png" alt="">I.E. César Vallejo</a>
+    <nav class="barra-nav" aria-label="Panel administrativo">
+      <a href="panel.html">Resultados</a>
+      <a href="estudiantes.html">Registro de estudiantes</a>
+      <a href="candidatos.html">Candidatos</a>
+      <a href="portada.html">Editar portada</a>
+      <a href="contrasena.html" aria-current="page">Contraseñas</a>
+    </nav>
+    <div class="barra-fin">
+      <span class="barra-usuario">Sesión: <span data-admin-nombre></span></span>
+      <a href="index.html" class="btn btn-verde" data-salir>Cerrar sesión</a>
+    </div>
+  </header>
+
+  <main class="contenedor-angosto">
+    <form class="hoja" id="formClave" novalidate>
+      <div class="cabecera-hoja">
+        <h1>Administrar contraseñas</h1>
+        <p class="bajada">Cambia la contraseña del usuario <strong data-admin-nombre></strong>. Si otras personas usan esta cuenta, avísales la nueva contraseña.</p>
+      </div>
+
+      <div class="mensaje" id="mensaje" role="alert" hidden></div>
+
+      <div class="campo">
+        <label for="actual">Contraseña actual</label>
+        <div class="con-ojo">
+          <input class="entrada" id="actual" type="password" autocomplete="current-password">
+          <button type="button" data-ojo="actual" aria-pressed="false">Ver</button>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="nueva">Nueva contraseña</label>
+        <div class="con-ojo">
+          <input class="entrada" id="nueva" type="password" autocomplete="new-password">
+          <button type="button" data-ojo="nueva" aria-pressed="false">Ver</button>
+        </div>
+        <p class="ayuda">Mínimo 8 caracteres. Combina letras y números.</p>
+      </div>
+      <div class="campo">
+        <label for="repetir">Repite la nueva contraseña</label>
+        <div class="con-ojo">
+          <input class="entrada" id="repetir" type="password" autocomplete="new-password">
+          <button type="button" data-ojo="repetir" aria-pressed="false">Ver</button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-azul btn-grande" id="btnGuardar">Cambiar contraseña</button>
+    </form>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/comun.js"></script>
+  <script>
+    (async function () {
+      const { $ } = U;
+      U.marcarDemo();
+      U.activarOjos();
+      if (!(await U.exigirAdmin())) return;
+
+      $('#formClave').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const msg = $('#mensaje');
+        const actual = $('#actual').value;
+        const nueva = $('#nueva').value;
+        const repetir = $('#repetir').value;
+        if (!actual || !nueva || !repetir) return U.mensaje(msg, 'Completa los tres campos.');
+        if (nueva.length < 8) return U.mensaje(msg, 'La nueva contraseña debe tener al menos 8 caracteres.');
+        if (nueva !== repetir) return U.mensaje(msg, 'Las contraseñas nuevas no coinciden. Escríbelas otra vez.');
+        if (nueva === actual) return U.mensaje(msg, 'La nueva contraseña debe ser distinta de la actual.');
+        const btn = $('#btnGuardar');
+        U.mensaje(msg, '');
+        U.cargando(btn, true, 'Guardando…');
+        try {
+          const r = await API.cambiarClave(actual, nueva);
+          if (r.ok) {
+            U.mensaje(msg, 'Contraseña cambiada. Úsala la próxima vez que ingreses.', 'ok');
+            $('#formClave').reset();
+          } else {
+            U.mensaje(msg, r.error);
+          }
+        } catch (err) {
+          U.mensaje(msg, err.message);
+        }
+        U.cargando(btn, false);
+      });
+    })();
+  </script>
+</body>
+</html>

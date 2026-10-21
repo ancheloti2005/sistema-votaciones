@@ -1,0 +1,10 @@
+# Padrones reales: nunca al repositorio
+*.xlsx
+*.xls
+*.csv
+!plantilla-estudiantes.xlsx
+
+.DS_Store
+Thumbs.db
+.vscode/
+node_modules/

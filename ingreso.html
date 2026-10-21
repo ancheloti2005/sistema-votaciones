@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ingresa para votar — I.E. César Vallejo</title>
+  <link rel="icon" href="images/onpe.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Oswald:wght@400;500&family=Raleway:wght@600;700&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="con-ondas">
+
+  <header class="barra">
+    <a href="index.html" class="marca"><img src="images/logocolegio.png" alt="">I.E. César Vallejo</a>
+  </header>
+
+  <main class="contenedor-angosto">
+    <form class="hoja" id="formIngreso" novalidate>
+      <div class="cabecera-hoja">
+        <h1>Ingresa para votar</h1>
+        <p class="bajada">Elige tu nivel e identifícate con tu DNI o tu código de estudiante.</p>
+      </div>
+
+      <div class="mensaje" id="mensaje" role="alert" hidden></div>
+
+      <fieldset class="paso" id="pasoNivel">
+        <legend><span class="num-paso">1</span> ¿En qué nivel estudias?</legend>
+        <div class="opciones">
+          <label class="opcion">
+            <input type="radio" name="nivel" value="primaria">
+            <span class="opcion-cuerpo">
+              <span class="opcion-titulo">Primaria</span>
+              <span class="opcion-sub">De 1.° a 6.° grado</span>
+            </span>
+          </label>
+          <label class="opcion">
+            <input type="radio" name="nivel" value="secundaria">
+            <span class="opcion-cuerpo">
+              <span class="opcion-titulo">Secundaria</span>
+              <span class="opcion-sub">De 1.° a 5.° año</span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="paso" id="pasoMetodo" disabled>
+        <legend><span class="num-paso">2</span> ¿Cómo quieres ingresar?</legend>
+        <div class="opciones">
+          <label class="opcion opcion-chica">
+            <input type="radio" name="metodo" value="dni">
+            <span class="opcion-cuerpo">
+              <span class="opcion-titulo">Con mi DNI</span>
+              <span class="opcion-sub">8 dígitos</span>
+            </span>
+          </label>
+          <label class="opcion opcion-chica">
+            <input type="radio" name="metodo" value="codigo">
+            <span class="opcion-cuerpo">
+              <span class="opcion-titulo">Con mi código</span>
+              <span class="opcion-sub">Código de estudiante</span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="paso" id="pasoClave" disabled>
+        <legend><span class="num-paso">3</span> <span id="tituloClave">Escribe tu contraseña</span></legend>
+        <div class="campo">
+          <label class="sr" for="clave" id="etiquetaClave">Contraseña</label>
+          <div class="con-ojo">
+            <input class="entrada" id="clave" name="clave" type="password" autocomplete="off" inputmode="numeric" placeholder="Elige primero cómo ingresar">
+            <button type="button" data-ojo="clave" aria-pressed="false">Ver</button>
+          </div>
+          <p class="ayuda" id="ayudaClave">Tu contraseña es tu número de DNI.</p>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn btn-amarillo btn-grande" id="btnIngresar" disabled>Ingresar a votar</button>
+
+      <p class="pie-hoja"><a href="index.html" class="btn btn-borde" id="btnVolver" style="width:100%">Volver al inicio</a></p>
+    </form>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/comun.js"></script>
+  <script src="js/ingreso.js"></script>
+</body>
+</html>

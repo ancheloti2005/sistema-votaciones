@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Registro de estudiantes — I.E. César Vallejo</title>
+  <link rel="icon" href="images/onpe.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Oswald:wght@400;500&family=Raleway:wght@600;700&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="con-ondas">
+
+  <header class="barra">
+    <a href="panel.html" class="marca"><img src="images/logocolegio.png" alt="">I.E. César Vallejo</a>
+    <nav class="barra-nav" aria-label="Panel administrativo">
+      <a href="panel.html">Resultados</a>
+      <a href="estudiantes.html" aria-current="page">Registro de estudiantes</a>
+      <a href="candidatos.html">Candidatos</a>
+      <a href="portada.html">Editar portada</a>
+      <a href="contrasena.html">Contraseñas</a>
+    </nav>
+    <div class="barra-fin">
+      <span class="barra-usuario">Sesión: <span data-admin-nombre></span></span>
+      <a href="index.html" class="btn btn-verde" data-salir>Cerrar sesión</a>
+    </div>
+  </header>
+
+
+  <main class="contenedor">
+    <section class="hoja">
+      <div class="cabecera-hoja sin-linea">
+        <h1>Subir registro de estudiantes</h1>
+        <p class="bajada">Carga la lista oficial de cada nivel en Excel. Con estos datos los estudiantes ingresan a votar usando su DNI o su código de estudiante como contraseña.</p>
+        <div class="conteos" id="conteos"></div>
+        <details class="columnas">
+          <summary>Formato del Excel</summary>
+          <p class="nota-tabla">Sube el reporte de listado de estudiantes tal como lo entrega el colegio (un archivo para primaria y otro para secundaria). El sistema busca solo estas columnas, en cualquier orden y aunque la tabla empiece más abajo:</p>
+          <ul>
+            <li>GRADO</li>
+            <li>SECCIÓN</li>
+            <li>TIPO DE DOCUMENTO</li>
+            <li>NÚMERO DE DOCUMENTO</li>
+            <li>CÓDIGO DEL ESTUDIANTE</li>
+            <li>APELLIDO PATERNO</li>
+            <li>APELLIDO MATERNO</li>
+            <li>NOMBRES</li>
+          </ul>
+          <p class="nota-tabla">Las demás columnas (sexo, fecha de nacimiento, edad, etc.) se ignoran. Los estudiantes sin DNI podrán ingresar con su código. Si un estudiante ya existe, sus datos se actualizan. <a class="btn-texto" href="plantilla-estudiantes.xlsx" download>Descargar plantilla de ejemplo</a></p>
+        </details>
+      </div>
+
+      <section class="carga" id="carga-primaria" data-nivel="primaria">
+        <div class="carga-cabecera">
+          <h2>Primaria</h2>
+          <button type="button" class="btn btn-texto btn-texto-peligro" data-borrar="primaria">Borrar lista de primaria</button>
+        </div>
+        <label class="zona-archivo" data-zona>
+          <input type="file" accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" data-archivo aria-label="Elegir archivo Excel de primaria">
+          <svg class="icono-excel" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="4" width="36" height="40" rx="5" fill="#1f7a45"/><path d="M16 15l16 18M32 15L16 33" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></svg>
+          <span><strong>Subir Excel de primaria</strong><span>Arrastra el archivo aquí o haz clic para elegirlo. Solo .xlsx o .xls (1.° a 6.° grado).</span></span>
+        </label>
+        <div class="revision" data-revision hidden></div>
+      </section>
+      <section class="carga" id="carga-secundaria" data-nivel="secundaria">
+        <div class="carga-cabecera">
+          <h2>Secundaria</h2>
+          <button type="button" class="btn btn-texto btn-texto-peligro" data-borrar="secundaria">Borrar lista de secundaria</button>
+        </div>
+        <label class="zona-archivo" data-zona>
+          <input type="file" accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" data-archivo aria-label="Elegir archivo Excel de secundaria">
+          <svg class="icono-excel" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="4" width="36" height="40" rx="5" fill="#1f7a45"/><path d="M16 15l16 18M32 15L16 33" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></svg>
+          <span><strong>Subir Excel de secundaria</strong><span>Arrastra el archivo aquí o haz clic para elegirlo. Solo .xlsx o .xls (1.° a 5.° año).</span></span>
+        </label>
+        <div class="revision" data-revision hidden></div>
+      </section>
+    </section>
+  </main>
+
+  <dialog class="modal" id="modalBorrar" aria-labelledby="tituloBorrar">
+    <div class="modal-cuerpo">
+      <h2 id="tituloBorrar">¿Borrar la lista?</h2>
+      <p id="textoBorrar"></p>
+      <div class="modal-acciones">
+        <button type="button" class="btn btn-borde" id="btnCancelarBorrar">Cancelar</button>
+        <button type="button" class="btn btn-peligro-lleno" id="btnConfirmarBorrar">Borrar lista</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/comun.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="js/estudiantes.js"></script>
+</body>
+</html>

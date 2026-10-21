@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Votaciones Vallejianas — I.E. César Vallejo</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="images/onpe.png" type="image/x-icon">
+
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:700,600,500' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+
+    <style>
+    body{
+     margin:0px;
+     padding:0px;
+     background-color: #0d233a;
+     overflow-x: hidden;
+    }
+      .headerFont{
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 20px;
+        color: #FFFFFF !important;
+      }
+
+      .subFont{
+        font-family: 'Raleway', sans-serif;
+        font-size: 14px;
+      }
+      
+      .specialHead{
+        font-family: 'Oswald', sans-serif;
+      }
+
+      .normalFont{
+        font-family: 'Roboto Condensed', sans-serif;
+      }
+
+      /* Estilo de fuente moderno y limpio similar a la referencia */
+      .modernTitleFont {
+        font-family: 'Raleway', sans-serif;
+        font-weight: 700;
+      }
+
+      /* Color azul para la barra superior */
+      .navbar-inverse, .navbar-default {
+        background-color: #0d233a !important;
+        border-color: #0d233a !important;
+      }
+
+      /* Estilo para asegurar que el texto del logo sea blanco */
+      .navbar-brand {
+        color: #FFFFFF !important;
+      }
+      
+      .navbar-brand:hover, .navbar-brand:focus {
+        color: #FFFFFF !important;
+      }
+
+      /* Estilo personalizado para el botón de Panel Administrativo */
+      .btn-admin-custom {
+        background-color: #22c55e !important;
+        border-color: #16a34a !important;
+        color: #ffffff !important;
+        border-radius: 6px;
+        padding: 6px 14px;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+      }
+
+      .btn-admin-custom:hover {
+        background-color: #16a34a !important;
+      }
+
+      /* Estilos para la sección de fondo */
+      .hero-section {
+        position: relative;
+        width: 100%;
+        min-height: calc(100vh - 50px);
+        background-image: url('images/ele2025.jpeg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin-top: 50px;
+      }
+
+      /* --- EFECTO DEGRADADO: CLARO ARRIBA Y MÁS OSCURO ABAJO --- */
+      .hero-overlay {
+        background: linear-gradient(to bottom, rgba(13, 35, 58, 0.25) 0%, rgba(13, 35, 58, 0.85) 100%);
+        width: 100%;
+        min-height: calc(100vh - 50px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px 25px 20px;
+        position: relative;
+      }
+
+      /* Logo izquierdo flotante (logocolegio.png) con efecto de resplandor sutil */
+      .main-logo-left {
+        position: absolute;
+        left: 140px;
+        top: 20px;
+        height: 190px;
+        z-index: 3;
+        filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 0.6));
+      }
+
+      /* Logo derecho flotante (Jornada Escolar Completa) */
+      .main-logo-right {
+        position: absolute;
+        right: 140px;
+        top: 20px;
+        height: 190px;
+        z-index: 3;
+      }
+
+      /* Contenedor absoluto para colocar tu imagen de ondas abajo sin tapar interacciones */
+      .bottom-waves {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        max-height: 140px;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      /* Botón principal de votación ultra brillante */
+      .btn-vote-custom {
+        background-color: #ffe600 !important;
+        color: #0d233a !important;
+        border: none;
+        padding: 14px 35px;
+        font-size: 30px;
+        border-radius: 20px;
+        font-weight: bold;
+        box-shadow: 0 0 20px rgba(255, 230, 0, 0.8), 0 4px 10px rgba(0,0,0,0.4);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        position: relative;
+        z-index: 3;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .btn-vote-custom:hover {
+        background-color: #ffff00 !important;
+        box-shadow: 0 0 30px rgba(255, 255, 0, 1), 0 6px 15px rgba(0,0,0,0.5);
+        transform: scale(1.03);
+      }
+
+      /* Botones de la portada, uno al lado del otro */
+      .acciones-portada {
+        display: flex; flex-wrap: wrap; justify-content: center; gap: 18px;
+      }
+
+      /* Botón azul degradado "Ver postulantes": mismo formato que el amarillo */
+      .btn-postulantes {
+        background: linear-gradient(135deg, #1d4fb8 0%, #2f74e6 55%, #5aa2ff 100%) !important;
+        color: #ffffff !important;
+        border: none;
+        padding: 14px 35px;
+        font-size: 30px;
+        border-radius: 20px;
+        font-weight: bold;
+        box-shadow: 0 0 14px rgba(47, 116, 230, .45), 0 4px 10px rgba(0,0,0,0.4);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        position: relative;
+        z-index: 3;
+        display: inline-flex;
+        align-items: center;
+      }
+      .btn-postulantes:hover, .btn-postulantes:focus {
+        box-shadow: 0 0 32px rgba(70, 145, 255, 1), 0 0 60px rgba(47, 116, 230, .55), 0 6px 15px rgba(0,0,0,0.5);
+        transform: scale(1.03);
+        filter: brightness(1.08);
+        color: #ffffff !important;
+      }
+      .btn-postulantes svg { width: 30px; height: 30px; margin-right: 18px; }
+
+      /* Cuenta regresiva */
+      .cuenta-regresiva {
+        display: inline-block; margin: 0 auto 30px; padding: 18px 26px 16px;
+        background: rgba(255, 255, 255, .94); border-radius: 18px;
+        box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 0 26px rgba(80, 150, 255, .45);
+      }
+      .cuenta-titulo {
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        font-family: 'Raleway', sans-serif; font-weight: 700; font-size: 22px; color: #0d233a; margin: 0 0 14px;
+      }
+      .cuenta-titulo svg { width: 26px; height: 26px; }
+      .cuenta-cajas { display: flex; gap: 14px; justify-content: center; }
+      .cuenta-caja { text-align: center; }
+      .cuenta-num {
+        display: block; min-width: 92px; padding: 10px 8px; border-radius: 12px;
+        background: linear-gradient(180deg, #2f74e6, #1d4fb8); color: #fff;
+        font-family: 'Oswald', sans-serif; font-size: 42px; line-height: 1.1; font-variant-numeric: tabular-nums;
+      }
+      .cuenta-txt { display: block; margin-top: 6px; color: #334155; font-family: 'Roboto Condensed', sans-serif; font-size: 16px; }
+      @media (max-width: 600px) {
+        .btn-vote-custom, .btn-postulantes { font-size: 22px !important; padding: 12px 24px; }
+        .cuenta-cajas { gap: 8px; }
+        .cuenta-num { min-width: 62px; font-size: 30px; }
+        .cuenta-titulo { font-size: 18px; }
+      }
+
+      a {
+        color: #FFFFFF;
+        text-decoration: none;
+      }
+
+      a:link {
+        color: #FFFFFF;
+        text-decoration: none;
+      }
+
+      a:visited {
+          color: #FFFFFF;
+          text-decoration: none;
+      }
+
+      a:hover {
+          color: #FFFFFF;
+          text-decoration: none;
+      }
+
+      a:active {
+          color: #FFFFFF;
+          text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+ 
+  <div>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container-fluid" style="padding-left: 90px; padding-right: 90px;">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-header">
+          <a href="index.html" class="navbar-brand headerFont text-lg" style="display: flex; align-items: center; padding-left: 0;">
+            <img src="images/logocolegio.png" alt="Logo" style="height: 30px; margin-right: 12px;">
+            <strong>I.E. César Vallejo</strong>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="example-nav-collapse">
+          <ul class="nav navbar-nav">
+          </ul>
+          <span class="normalFont">
+            <a href="admin.html" class="btn btn-admin-custom navbar-right navbar-btn" style="margin-right: 0; margin-top: 10px;">
+              <span class="glyphicon glyphicon-ok-sign"></span> Panel Administrativo
+            </a>
+          </span>
+        </div>
+      </div>
+    </nav>
+    </div>
+
+      <!-- Sección con tu imagen de fondo y el contenido reubicado -->
+      <div class="hero-section" id="portada">
+        <div class="hero-overlay">
+          
+          <!-- Logotipo izquierdo flotante con sombra/resplandor -->
+          <img src="images/logocolegio.png" alt="Logo Izquierdo" class="main-logo-left hidden-xs">
+          <!-- Logotipo derecho de Jornada Escolar Completa (je.png) -->
+          <img src="images/je.png" alt="Logo JEC" class="main-logo-right hidden-xs">
+
+          <!-- Espaciador superior -->
+          <div style="height: 240px;"></div> 
+          
+          <div class="container text-center" style="position: relative; z-index: 3;">
+            <h1 id="tituloPortada" class="modernTitleFont" style="font-size: 46px; color: #ffffff; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">
+              Elecciones del Municipio Escolar 2027
+            </h1>
+            <p id="subtituloPortada" class="normalFont" style="white-space: pre; font-size: 20px; color: #e2e8f0; letter-spacing: 1px; margin-bottom: 30px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
+              Primaria  •  Secundaria
+            </p>
+            <div class="cuenta-regresiva" id="cuentaRegresiva" hidden>
+              <p class="cuenta-titulo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1d4fb8" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 14h2M12 14h2M16 14h0M8 17h2M12 17h2" stroke-linecap="round"/></svg>
+                Las votaciones empiezan en:
+              </p>
+              <div class="cuenta-cajas" role="timer" aria-live="off">
+                <div class="cuenta-caja"><span class="cuenta-num" id="cDias">00</span><span class="cuenta-txt">Días</span></div>
+                <div class="cuenta-caja"><span class="cuenta-num" id="cHoras">00</span><span class="cuenta-txt">Horas</span></div>
+                <div class="cuenta-caja"><span class="cuenta-num" id="cMin">00</span><span class="cuenta-txt">Minutos</span></div>
+                <div class="cuenta-caja"><span class="cuenta-num" id="cSeg">00</span><span class="cuenta-txt">Segundos</span></div>
+              </div>
+            </div>
+            <div class="acciones-portada">
+              <a href="ingreso.html" class="btn btn-vote-custom specialHead">
+                <img src="images/emitir.png" alt="" style="height: 26px; margin-right: 20px;">Emitir su voto
+              </a>
+              <a href="postulantes.html" class="btn btn-postulantes specialHead">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M16.5 14.6c2.6.1 4.5 1.7 5 4.4"/></svg>Ver postulantes
+              </a>
+            </div>
+          </div>
+
+          <!-- Espacio reservado para que los botones no queden sobre las ondas -->
+          <div style="height: 40px;"></div>
+          <div class="text-center" style="position: absolute; left: 0; right: 0; bottom: 4px; z-index: 3;">
+            <p class="normalFont" style="color: #cbd5e1; font-size: 14px; margin: 0;">© 2026 - I.E. César Vallejo</p>
+          </div>
+
+          <!-- Imagen de ondas colocada perfectamente en la parte inferior -->
+          <img src="images/fondo.png" alt="Ondas decorativas" class="bottom-waves">
+
+        </div>
+      </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Título, texto y fondo editables desde el panel (Editar portada) -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/comun.js"></script>
+    <script>
+      API.portada().then(function (p) {
+        if (!p) return;
+        if (p.titulo) document.getElementById('tituloPortada').textContent = p.titulo;
+        var sub = document.getElementById('subtituloPortada');
+        sub.textContent = p.subtitulo || '';
+        sub.style.visibility = p.subtitulo ? 'visible' : 'hidden';
+        if (p.fondo_url) document.getElementById('portada').style.backgroundImage = 'url("' + p.fondo_url + '")';
+      }).catch(function () { /* se queda la portada original */ });
+
+      // Cuenta regresiva hasta el inicio programado (usa la hora del servidor)
+      API.estadoVotacion().then(function (e) {
+        if (!e || !e.inicio) return;
+        var desfase = e.ahora ? Date.parse(e.ahora) - Date.now() : 0;
+        var meta = Date.parse(e.inicio);
+        var caja = document.getElementById('cuentaRegresiva');
+        var dos = function (n) { return (n < 10 ? '0' : '') + n; };
+        function tic() {
+          var falta = meta - (Date.now() + desfase);
+          if (falta <= 0) { caja.hidden = true; clearInterval(t); return; }
+          var s = Math.floor(falta / 1000);
+          document.getElementById('cDias').textContent = dos(Math.floor(s / 86400));
+          document.getElementById('cHoras').textContent = dos(Math.floor(s % 86400 / 3600));
+          document.getElementById('cMin').textContent = dos(Math.floor(s % 3600 / 60));
+          document.getElementById('cSeg').textContent = dos(s % 60);
+          caja.hidden = false;
+        }
+        var t = setInterval(tic, 1000);
+        tic();
+      }).catch(function () { /* sin cuenta regresiva */ });
+    </script>
+  </body>
+</html>

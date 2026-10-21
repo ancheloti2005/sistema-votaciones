@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Elige a tu candidato — I.E. César Vallejo</title>
+  <link rel="icon" href="images/onpe.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Oswald:wght@400;500&family=Raleway:wght@600;700&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="con-ondas">
+
+  <header class="barra">
+    <span class="marca"><img src="images/logocolegio.png" alt="">I.E. César Vallejo</span>
+  </header>
+
+  <main class="contenedor" style="max-width: 900px;">
+    <section class="hoja" id="hojaVoto">
+      <header class="cedula-cabecera">
+        <img src="images/logocolegio.png" alt="Escudo de la I.E. César Vallejo">
+        <div>
+          <p class="cedula-evento" id="evento">Elecciones del Municipio Escolar</p>
+          <h1>Bienvenido(a), <span id="nombreVotante">…</span></h1>
+          <p class="cedula-datos" id="datosVotante"></p>
+        </div>
+      </header>
+
+      <div class="mensaje" id="mensaje" role="alert" hidden></div>
+
+      <p class="instruccion" id="instruccion">Marca a tu candidato con un clic. Puedes cambiar tu elección antes de enviar.</p>
+
+      <div class="cedula" id="cedula" role="radiogroup" aria-labelledby="instruccion">
+        <p class="vacio" style="margin:0">Cargando candidatos…</p>
+      </div>
+
+      <div class="acciones-cedula">
+        <button type="button" class="btn btn-borde" id="btnSalir">Salir sin votar</button>
+        <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap; justify-content:flex-end;">
+          <span class="eleccion-actual" id="eleccionActual">Aún no marcas ningún candidato.</span>
+          <button type="button" class="btn btn-amarillo" id="btnEnviar" disabled>Enviar voto</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="hoja voto-listo" id="hojaListo" hidden>
+      <div class="sello" aria-hidden="true">
+        <svg viewBox="0 0 60 60"><path d="M14 31 L26 43 L47 18"/></svg>
+      </div>
+      <h1>¡Tu voto fue registrado!</h1>
+      <p id="textoListo">Gracias por participar.</p>
+      <button type="button" class="btn btn-amarillo" id="btnTerminar">Terminar</button>
+    </section>
+  </main>
+
+  <dialog class="modal" id="modalConfirmar" aria-labelledby="tituloConfirmar">
+    <div class="modal-cuerpo">
+      <h2 id="tituloConfirmar">¿Confirmas tu voto?</h2>
+      <p>Una vez enviado no se puede cambiar.</p>
+      <div class="confirmar-cand" id="confirmarCand"></div>
+      <div class="modal-acciones">
+        <button type="button" class="btn btn-borde" id="btnCambiar">Cambiar</button>
+        <button type="button" class="btn btn-azul" id="btnConfirmar">Sí, enviar mi voto</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/comun.js"></script>
+  <script src="js/vault.js"></script>
+</body>
+</html>

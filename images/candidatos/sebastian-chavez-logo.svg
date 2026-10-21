@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+<rect x="6" y="6" width="188" height="188" rx="26" fill="#e08a00"/>
+<rect x="18" y="18" width="164" height="164" rx="18" fill="none" stroke="#fff" stroke-opacity="0.45" stroke-width="3"/>
+<circle cx="100" cy="112" r="22" fill="#fff"/><g stroke="#fff" stroke-width="7" stroke-linecap="round"><path d="M100 70v12M68 84l9 9M132 84l-9 9M58 112h12M130 112h12"/></g><path d="M52 132h96" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+<text x="100" y="172" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="26" fill="#fff" letter-spacing="2">NA</text>
+</svg>

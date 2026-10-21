@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+<rect x="6" y="6" width="188" height="188" rx="26" fill="#6b3fa0"/>
+<rect x="18" y="18" width="164" height="164" rx="18" fill="none" stroke="#fff" stroke-opacity="0.45" stroke-width="3"/>
+<path d="M58 80c16-6 30-4 42 6 12-10 26-12 42-6v52c-16-6-30-4-42 6-12-10-26-12-42-6z" fill="#fff"/><path d="M100 86v52" stroke="#6b3fa0" stroke-width="4"/>
+<text x="100" y="172" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="26" fill="#fff" letter-spacing="2">FE</text>
+</svg>

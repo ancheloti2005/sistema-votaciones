@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Panel administrativo — I.E. César Vallejo</title>
+  <link rel="icon" href="images/onpe.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Oswald:wght@400;500&family=Raleway:wght@600;700&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="con-ondas">
+
+  <header class="barra">
+    <a href="index.html" class="marca"><img src="images/logocolegio.png" alt="">I.E. César Vallejo</a>
+    <div class="barra-fin"><a href="index.html" class="btn btn-verde">Volver al inicio</a></div>
+  </header>
+
+  <main class="contenedor-angosto" style="max-width: 460px;">
+    <form class="hoja" id="formAdmin" novalidate>
+      <div class="cabecera-hoja">
+        <h1>Panel administrativo</h1>
+        <p class="bajada">Acceso solo para el comité electoral.</p>
+      </div>
+
+      <div class="mensaje" id="mensaje" role="alert" hidden></div>
+
+      <div class="campo">
+        <label for="usuario">Usuario</label>
+        <input class="entrada" id="usuario" name="usuario" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+      </div>
+      <div class="campo">
+        <label for="clave">Contraseña</label>
+        <div class="con-ojo">
+          <input class="entrada" id="clave" name="clave" type="password" autocomplete="current-password" required>
+          <button type="button" data-ojo="clave" aria-pressed="false">Ver</button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-azul btn-grande" id="btnEntrar">Ingresar</button>
+    </form>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/comun.js"></script>
+  <script>
+    (async function () {
+      const { $ } = U;
+      U.marcarDemo();
+      U.activarOjos();
+      if (await API.adminSesion()) { U.irA('panel.html'); return; }
+      $('#usuario').focus();
+
+      $('#formAdmin').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const usuario = $('#usuario').value.trim();
+        const clave = $('#clave').value;
+        const msg = $('#mensaje');
+        if (!usuario || !clave) { U.mensaje(msg, 'Escribe tu usuario y tu contraseña.'); return; }
+        const btn = $('#btnEntrar');
+        U.mensaje(msg, '');
+        U.cargando(btn, true, 'Ingresando…');
+        try {
+          const r = await API.adminEntrar(usuario, clave);
+          if (r.ok) { U.irA('panel.html'); return; }
+          U.mensaje(msg, r.error);
+        } catch (err) {
+          U.mensaje(msg, err.message);
+        }
+        U.cargando(btn, false);
+        $('#clave').select();
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Resultados — I.E. César Vallejo</title>
+  <link rel="icon" href="images/onpe.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Oswald:wght@400;500&family=Raleway:wght@600;700&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="con-ondas">
+
+  <header class="barra">
+    <a href="panel.html" class="marca"><img src="images/logocolegio.png" alt="">I.E. César Vallejo</a>
+    <nav class="barra-nav" aria-label="Panel administrativo">
+      <a href="panel.html" aria-current="page">Resultados</a>
+      <a href="estudiantes.html">Registro de estudiantes</a>
+      <a href="candidatos.html">Candidatos</a>
+      <a href="portada.html">Editar portada</a>
+      <a href="contrasena.html">Contraseñas</a>
+    </nav>
+    <div class="barra-fin">
+      <span class="barra-usuario">Sesión: <span data-admin-nombre></span></span>
+      <a href="index.html" class="btn btn-verde" data-salir>Cerrar sesión</a>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="hoja">
+      <div class="cabecera-hoja cabecera-panel">
+        <div>
+          <h1>Resultados de la votación</h1>
+          <p class="bajada" id="actualizado">Cargando resultados…</p>
+        </div>
+        <div class="controles">
+          <span class="estado" id="estado">—</span>
+          <button type="button" class="btn btn-borde" id="btnEstado" disabled>Programar votación</button>
+          <button type="button" class="btn btn-rojo" id="btnCerrarVotacion" hidden>Cerrar votación</button>
+          <button type="button" class="btn btn-azul" id="btnPdf" disabled>Descargar resultados (PDF)</button>
+        </div>
+      </div>
+
+      <div class="cifras" id="cifras"></div>
+
+      <div id="graficos"></div>
+
+      <details class="faltantes" id="faltantes">
+        <summary>
+          <span class="faltantes-titulo">Estudiantes que no votaron</span>
+          <span class="faltantes-cuenta" id="faltantesCuenta"></span>
+        </summary>
+        <div class="faltantes-cuerpo">
+          <div class="faltantes-filtros">
+            <label class="sr" for="fNivel">Nivel</label>
+            <select class="entrada" id="fNivel">
+              <option value="">Todos los niveles</option>
+              <option value="primaria">Primaria</option>
+              <option value="secundaria">Secundaria</option>
+            </select>
+            <label class="sr" for="fGrado">Grado</label>
+            <select class="entrada" id="fGrado"><option value="">Todos los grados</option></select>
+            <label class="sr" for="fBuscar">Buscar por nombre</label>
+            <input class="entrada" id="fBuscar" type="search" placeholder="Buscar por nombre o apellido" autocomplete="off">
+          </div>
+          <div id="faltantesLista"><p class="vacio">Cargando…</p></div>
+        </div>
+      </details>
+
+      <div class="zona-peligro">
+        <div>
+          <h3>Limpiar votos</h3>
+          <p>Borra todos los votos y deja a todos los estudiantes habilitados para votar otra vez. Descarga el PDF antes: esta acción no se puede deshacer.</p>
+        </div>
+        <button type="button" class="btn btn-peligro" id="btnLimpiar">Limpiar votos</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="modal" id="modalLimpiar" aria-labelledby="tituloLimpiar">
+    <form class="modal-cuerpo" id="formLimpiar" method="dialog">
+      <h2 id="tituloLimpiar">¿Limpiar todos los votos?</h2>
+      <p>Se borrarán <strong id="totalBorrar">0</strong> votos de primaria y secundaria. Para confirmar, escribe <strong>LIMPIAR</strong>.</p>
+      <label class="sr" for="confirmaTexto">Escribe LIMPIAR para confirmar</label>
+      <input class="entrada" id="confirmaTexto" autocomplete="off" autocapitalize="characters" spellcheck="false">
+      <div class="modal-acciones">
+        <button type="button" class="btn btn-borde" id="btnCancelarLimpiar">Cancelar</button>
+        <button type="submit" class="btn btn-peligro-lleno" id="btnConfirmarLimpiar" disabled>Limpiar votos</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" id="modalCerrar" aria-labelledby="tituloCerrar">
+    <div class="modal-cuerpo">
+      <h2 id="tituloCerrar">¿Cerrar la votación?</h2>
+      <p id="textoCerrar"></p>
+      <div class="modal-acciones">
+        <button type="button" class="btn btn-borde" id="btnCancelarCerrar">Cancelar</button>
+        <button type="button" class="btn btn-rojo" id="btnConfirmarCerrar">Cerrar votación</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="modal" id="modalEstado" aria-labelledby="tituloEstado">
+    <form class="modal-cuerpo" id="formEstado" novalidate>
+      <h2 id="tituloEstado">Programar votación</h2>
+      <p>Los estudiantes solo podrán ingresar a votar entre estas horas. En la portada aparecerá la cuenta regresiva hasta el inicio.</p>
+      <div class="mensaje" id="msgEstado" role="alert" hidden></div>
+      <div class="campo">
+        <label for="eInicio">Día y hora de inicio</label>
+        <input class="entrada" id="eInicio" type="datetime-local">
+      </div>
+      <div class="campo">
+        <label for="eFin">Día y hora de cierre</label>
+        <input class="entrada" id="eFin" type="datetime-local">
+        <p class="ayuda">Si lo dejas vacío, la votación sigue abierta hasta que la cierres.</p>
+      </div>
+      <div class="atajos">
+        <button type="button" class="btn btn-texto" id="btnAbrirAhora">Abrir ahora</button>
+      </div>
+      <div class="modal-acciones">
+        <button type="button" class="btn btn-borde" id="btnCancelarEstado">Cancelar</button>
+        <button type="submit" class="btn btn-azul" id="btnConfirmarEstado">Guardar programación</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/comun.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <script src="js/panel.js"></script>
+</body>
+</html>

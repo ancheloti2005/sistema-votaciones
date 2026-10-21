@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Postulantes — I.E. César Vallejo</title>
+  <link rel="icon" href="images/onpe.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Oswald:wght@400;500&family=Raleway:wght@600;700&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="con-ondas">
+
+  <header class="barra">
+    <a href="index.html" class="marca"><img src="images/logocolegio.png" alt="">I.E. César Vallejo</a>
+  </header>
+
+  <main class="contenedor">
+    <section class="hoja">
+      <div class="cabecera-hoja cabecera-volver">
+        <div>
+          <p class="cedula-evento" id="evento">Elecciones del Municipio Escolar</p>
+          <h1>Postulantes</h1>
+          <p class="bajada">Conoce a los candidatos de cada nivel antes de votar.</p>
+        </div>
+      </div>
+
+      <div id="niveles"><p class="vacio">Cargando postulantes…</p></div>
+
+      <p class="pie-hoja" style="margin-top:34px"><a href="index.html" class="btn btn-amarillo">Volver al inicio</a></p>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/comun.js"></script>
+  <script>
+    (async function () {
+      const { $, esc } = U;
+      U.marcarDemo();
+      API.portada().then((p) => { if (p && p.titulo) $('#evento').textContent = p.titulo; }).catch(() => {});
+      try {
+        const niveles = ['primaria', 'secundaria'];
+        const listas = await Promise.all(niveles.map((n) => API.candidatos(n)));
+        $('#niveles').innerHTML = niveles.map((n, i) => {
+          const lista = listas[i] || [];
+          const cuerpo = lista.length ? `<div class="carteles">${lista.map((c) => `
+            <article class="cartel" style="--c:${esc(c.color || '#1d4fb8')}">
+              <div class="cartel-foto">
+                ${c.foto_url ? `<img src="${esc(c.foto_url)}" alt="Foto de ${esc(c.nombre)}">` : ''}
+                ${c.logo_url ? `<img class="cartel-logo" src="${esc(c.logo_url)}" alt="Logo de la lista ${esc(c.lista || '')}">` : ''}
+              </div>
+              <div class="cartel-datos">
+                <span class="cand-nombre">${esc(c.nombre)}</span>
+                ${c.lista ? `<span class="cand-lista">Lista ${esc(c.lista)}</span>` : ''}
+                <span class="cartel-cargo">${esc(c.cargo || '')}</span>
+              </div>
+            </article>`).join('')}</div>` : '<p class="vacio">Aún no hay postulantes registrados en este nivel.</p>';
+          return `<section class="bloque-nivel"><div class="titulo-nivel"><h2>${U.nivelTexto(n)}</h2><span>${lista.length} ${lista.length === 1 ? 'postulante' : 'postulantes'}</span></div>${cuerpo}</section>`;
+        }).join('');
+      } catch (err) {
+        $('#niveles').innerHTML = `<div class="mensaje mensaje-error">${esc(err.message)}</div>`;
+      }
+    })();
+  </script>
+</body>
+</html>

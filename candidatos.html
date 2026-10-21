@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Candidatos — I.E. César Vallejo</title>
+  <link rel="icon" href="images/onpe.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Oswald:wght@400;500&family=Raleway:wght@600;700&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="con-ondas">
+
+  <header class="barra">
+    <a href="panel.html" class="marca"><img src="images/logocolegio.png" alt="">I.E. César Vallejo</a>
+    <nav class="barra-nav" aria-label="Panel administrativo">
+      <a href="panel.html">Resultados</a>
+      <a href="estudiantes.html">Registro de estudiantes</a>
+      <a href="candidatos.html" aria-current="page">Candidatos</a>
+      <a href="portada.html">Editar portada</a>
+      <a href="contrasena.html">Contraseñas</a>
+    </nav>
+    <div class="barra-fin">
+      <span class="barra-usuario">Sesión: <span data-admin-nombre></span></span>
+      <a href="index.html" class="btn btn-verde" data-salir>Cerrar sesión</a>
+    </div>
+  </header>
+
+
+  <main class="contenedor">
+    <section class="hoja">
+      <div class="cabecera-hoja cabecera-panel">
+        <div>
+          <h1>Candidatos</h1>
+          <p class="bajada">Agrega, edita o quita candidatos. Lo que guardes aquí es lo que ven los estudiantes en la cédula.</p>
+        </div>
+        <div class="controles"><button type="button" class="btn btn-azul" id="btnAgregar">Agregar candidato</button></div>
+      </div>
+      <div id="listas"><p class="vacio">Cargando candidatos…</p></div>
+    </section>
+  </main>
+
+  <dialog class="modal modal-ancho" id="modalCand" aria-labelledby="tituloCand">
+    <form class="modal-cuerpo" id="formCand" novalidate>
+      <h2 id="tituloCand">Agregar candidato</h2>
+      <div class="mensaje" id="msgCand" role="alert" hidden></div>
+      <div class="rejilla-2">
+        <div class="campo">
+          <label for="cNivel">Nivel</label>
+          <select class="entrada" id="cNivel"><option value="primaria">Primaria</option><option value="secundaria">Secundaria</option></select>
+        </div>
+        <div class="campo">
+          <label for="cOrden">Orden en la cédula</label>
+          <input class="entrada" id="cOrden" type="number" min="1" max="50" value="1">
+        </div>
+      </div>
+      <div class="campo">
+        <label for="cNombre">Nombre completo</label>
+        <input class="entrada" id="cNombre" maxlength="80" autocomplete="off">
+      </div>
+      <div class="rejilla-2">
+        <div class="campo">
+          <label for="cCargo">Cargo o rol</label>
+          <input class="entrada" id="cCargo" list="cargos" maxlength="60" autocomplete="off">
+          <datalist id="cargos">
+            <option value="Alcalde escolar"><option value="Alcaldesa escolar"><option value="Teniente alcalde"><option value="Teniente alcaldesa"><option value="Regidor(a) de Educación"><option value="Regidor(a) de Deporte"><option value="Delegado(a) de aula">
+          </datalist>
+        </div>
+        <div class="campo">
+          <label for="cLista">Nombre de la lista</label>
+          <input class="entrada" id="cLista" maxlength="60" autocomplete="off" placeholder="Opcional">
+        </div>
+      </div>
+      <div class="rejilla-2">
+        <div class="campo">
+          <span class="etiqueta">Foto</span>
+          <label class="subir-img">
+            <img id="cFotoVista" alt="" hidden>
+            <span id="cFotoTexto">Elegir foto</span>
+            <input type="file" id="cFoto" accept="image/png,image/jpeg,image/webp">
+          </label>
+          <p class="ayuda">Cuadrada, JPG o PNG, mínimo 600 × 600 px, con la cara centrada.</p>
+          <button type="button" class="btn btn-texto btn-texto-peligro" id="cFotoQuitar" hidden>Quitar foto</button>
+        </div>
+        <div class="campo">
+          <span class="etiqueta">Logo de la lista</span>
+          <label class="subir-img">
+            <img id="cLogoVista" alt="" hidden>
+            <span id="cLogoTexto">Elegir logo</span>
+            <input type="file" id="cLogo" accept="image/png,image/jpeg,image/webp">
+          </label>
+          <p class="ayuda">Cuadrado, PNG con fondo transparente, mínimo 400 × 400 px.</p>
+          <button type="button" class="btn btn-texto btn-texto-peligro" id="cLogoQuitar" hidden>Quitar logo</button>
+        </div>
+      </div>
+      <div class="rejilla-2">
+        <div class="campo">
+          <label for="cColor">Color en el gráfico</label>
+          <input class="entrada entrada-color" id="cColor" type="color" value="#1d4fb8">
+        </div>
+        <div class="campo" style="display:flex; align-items:flex-end;">
+          <label class="check"><input type="checkbox" id="cActivo" checked> <span>Visible en la cédula</span></label>
+        </div>
+      </div>
+      <div class="modal-acciones">
+        <button type="button" class="btn btn-borde" id="btnCancelarCand">Cancelar</button>
+        <button type="submit" class="btn btn-azul" id="btnGuardarCand">Guardar candidato</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" id="modalQuitar" aria-labelledby="tituloQuitar">
+    <div class="modal-cuerpo">
+      <h2 id="tituloQuitar">¿Quitar candidato?</h2>
+      <p id="textoQuitar"></p>
+      <div class="modal-acciones">
+        <button type="button" class="btn btn-borde" id="btnCancelarQuitar">Cancelar</button>
+        <button type="button" class="btn btn-peligro-lleno" id="btnConfirmarQuitar">Quitar candidato</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/comun.js"></script>
+  <script src="js/candidatos.js"></script>
+</body>
+</html>

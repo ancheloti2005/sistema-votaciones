@@ -1,0 +1,20 @@
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Las direcciones antiguas en PHP llevan a las nuevas páginas
+[[redirects]]
+  from = "/cpanel.php"
+  to = "/panel.html"
+  status = 301
+
+[[redirects]]
+  from = "/changePassword.php"
+  to = "/contrasena.html"
+  status = 301
